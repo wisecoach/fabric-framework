@@ -1,15 +1,13 @@
-package com.wisecoach.security.userprovider;
+package com.wisecoach.security.user;
 
-import com.wisecoach.security.user.User;
 import com.wisecoach.security.userinfo.UserInfo;
 
 /**
  * User提供者，允许根据 {@link UserInfo} 来获取具体的 {@link User}
  * 具体使用受 {@link UserProviderManager} 管理
- *
- * @author: wisecoach
- * @date: 2023/2/23 上午10:52
- * @version: 1.0.0
+ * {@code @author:} wisecoach
+ * {@code @date:} 2023/2/23 上午10:52
+ * {@code @version:} 1.0.0
  */
 
 public interface UserProvider {
