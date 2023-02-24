@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="fabric-common" />
         <module name="fabric-security" />
+        <module name="fabric-security-spring" />
       </profile>
     </annotationProcessing>
   </component>
