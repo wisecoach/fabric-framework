@@ -1,5 +1,6 @@
 package com.wisecoach.security.user;
 
+import com.wisecoach.annotation.Nullable;
 import com.wisecoach.security.userinfo.UserInfo;
 
 /**
@@ -11,19 +12,19 @@ import com.wisecoach.security.userinfo.UserInfo;
 
 public interface UserProviderManager {
     /**
-     * 调度注册在内的UserProvider获取User
+     * 调度注册在内的UserProvider获取User，若无法取得user，会报错
      * @param userInfo 用户信息
      * @return user
      */
-    User getUser(UserInfo userInfo);
+    User getUser(UserInfo userInfo) throws UserException;
 
     /**
-     * 使用特定类型的userProviders去获取User
+     * 使用特定类型的userProviders去获取User，若无法取得user，会报错
      * @param userInfo 用户信息
      * @param classes 特定的provider类
      * @return user
      */
-    User getUser(UserInfo userInfo, Class<? extends UserProvider>[] classes);
+    User getUser(UserInfo userInfo, Class<? extends UserProvider>[] classes) throws UserException;
 
     /**
      * 取得当前注册在内的Providers

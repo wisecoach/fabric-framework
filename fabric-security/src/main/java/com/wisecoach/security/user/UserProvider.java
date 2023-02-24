@@ -1,5 +1,6 @@
 package com.wisecoach.security.user;
 
+import com.wisecoach.annotation.Nullable;
 import com.wisecoach.security.userinfo.UserInfo;
 
 /**
@@ -13,9 +14,11 @@ import com.wisecoach.security.userinfo.UserInfo;
 public interface UserProvider {
     /**
      * 根据UserInfo获取User
+     * 如果所有的provider都无法取得user会返回null
      * @param userInfo 用户信息
      * @return user
      */
+    @Nullable
     User getUser(UserInfo userInfo);
 
     /**

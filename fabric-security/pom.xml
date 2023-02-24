@@ -12,7 +12,9 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <fabric-framework.version>1.0-SNAPSHOT</fabric-framework.version>
-
+        <fabric-gateway.version>1.2.2</fabric-gateway.version>
+        <cglib.version>3.3.0</cglib.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 
     <dependencies>
@@ -24,7 +26,17 @@
         <dependency>
             <groupId>org.hyperledger.fabric</groupId>
             <artifactId>fabric-gateway</artifactId>
-            <version>1.2.2</version>
+            <version>${fabric-gateway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 

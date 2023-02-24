@@ -20,6 +20,7 @@ public class ArrayUserProviderManager implements UserProviderManager {
     @Override
     public User getUser(UserInfo userInfo) {
         Assert.notNull(userInfo, "userInfo不可为null");
+        Assert.state(providers.size() > 0, "请至少注册一个provider");
         for (UserProvider userProvider : providers) {
             if (userProvider.support(userInfo)) {
                 User user = userProvider.getUser(userInfo);
