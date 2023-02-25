@@ -7,6 +7,9 @@
         <option value="$PROJECT_DIR$/fabric-security/pom.xml" />
         <option value="$PROJECT_DIR$/fabric-common/pom.xml" />
         <option value="$PROJECT_DIR$/fabric-security-spring/pom.xml" />
+        <option value="$PROJECT_DIR$/fabric-security-spring-boot/pom.xml" />
+        <option value="$PROJECT_DIR$/fabric-frame-sample/pom.xml" />
+        <option value="$PROJECT_DIR$/fabric-framework-sample/pom.xml" />
       </list>
     </option>
   </component>

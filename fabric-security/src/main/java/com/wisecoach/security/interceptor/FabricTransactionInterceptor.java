@@ -21,8 +21,13 @@ import java.lang.reflect.Method;
 public class FabricTransactionInterceptor implements MethodInterceptor {
 
     private final Logger logger = Logger.getLogger(FabricTransactionInterceptor.class.getName());
-    private UserProviderManager userProviderManager;
-    private UserInfoProvider userInfoProvider;
+    private final UserProviderManager userProviderManager;
+    private final UserInfoProvider userInfoProvider;
+
+    public FabricTransactionInterceptor(UserProviderManager userProviderManager, UserInfoProvider userInfoProvider) {
+        this.userProviderManager = userProviderManager;
+        this.userInfoProvider = userInfoProvider;
+    }
 
     @Override
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {

@@ -7,9 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="fabric-common" />
+        <module name="fabric-security-spring-boot-autoconfigure" />
+        <module name="fabric-framework-sample" />
+        <module name="fabric-security-spring-boot-starter" />
         <module name="fabric-security" />
         <module name="fabric-security-spring" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="fabric-framework-sample" options="-parameters" />
+    </option>
   </component>
 </project>

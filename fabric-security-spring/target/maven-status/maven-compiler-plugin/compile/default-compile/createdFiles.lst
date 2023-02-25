@@ -1,0 +1,3 @@
+com/wisecoach/security/spring/annotation/FabricService.class
+com/wisecoach/security/spring/autoproxy/AbstractFabricServiceProxyAutoCreator.class
+com/wisecoach/security/spring/autoproxy/AnnotatedFabricServiceProxyAutoCreator.class

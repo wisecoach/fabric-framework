@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "fabric.security",
+      "type": "com.wisecoach.security.spring.boot.configuration.FabricSecurityProperties",
+      "sourceType": "com.wisecoach.security.spring.boot.configuration.FabricSecurityProperties"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}
