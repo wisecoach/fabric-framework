@@ -25,6 +25,7 @@
         <dependency>
             <groupId>com.wisecoach</groupId>
             <artifactId>fabric-security-spring</artifactId>
+            <version>${farbic-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -5,7 +5,6 @@
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/userinfo/UserInfo.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/interceptor/FabricTransactionInterceptor.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/user/ThreadLocalUserContextHolderStrategy.java
-/mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/userinfo/NoOpUserInfoProviderImpl.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/user/ArrayUserProviderManager.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/user/UserException.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/userinfo/ThreadLocalUserInfoContextHolderStrategy.java
@@ -16,6 +15,7 @@
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/userinfo/UserInfoContextImpl.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/userinfo/AbstractUserInfoProvider.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/user/UserProviderManager.java
+/mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/userinfo/NoOpUserInfoProvider.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/userinfo/UserInfoContextHolder.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/user/UserContext.java
 /mnt/F/fabric/fabric-framework/fabric-security/src/main/java/com/wisecoach/security/annotation/FabricTransaction.java

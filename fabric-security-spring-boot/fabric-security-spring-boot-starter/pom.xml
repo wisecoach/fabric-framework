@@ -20,8 +20,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.fabricframe.boot</groupId>
-            <artifactId>fabirc-security-spring-boot-autoconfigure</artifactId>
+            <groupId>com.wisecoach</groupId>
+            <artifactId>fabric-security-spring-boot-autoconfigure</artifactId>
             <version>${fabric-framework.version}</version>
         </dependency>
     </dependencies>

@@ -6,6 +6,7 @@ import com.wisecoach.security.user.ArrayUserProviderManager;
 import com.wisecoach.security.user.UserProviderManager;
 import com.wisecoach.security.userinfo.NoOpUserInfoProvider;
 import com.wisecoach.security.userinfo.UserInfoProvider;
+import com.wisecoach.util.Assert;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,7 +34,7 @@ public class FabricSecurityAutoConfigure {
      * 如果用户没有注册自定义 {@link UserInfoProvider} ，则使用 {@link NoOpUserInfoProvider}
      */
     @Bean
-    @ConditionalOnMissingClass
+    @ConditionalOnMissingBean(UserInfoProvider.class)
     public UserInfoProvider userInfoProvider() {
         return new NoOpUserInfoProvider();
     }
