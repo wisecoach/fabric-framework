@@ -22,6 +22,11 @@
             <artifactId>fabric-gateway</artifactId>
             <version>${fabric-gateway.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.wisecoach</groupId>
+            <artifactId>fabric-common</artifactId>
+            <version>${fabric-framework.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
