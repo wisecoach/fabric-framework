@@ -5,21 +5,30 @@ import com.wisecoach.security.interceptor.FabricTransactionInterceptor;
 import net.sf.cglib.proxy.Enhancer;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.Ordered;
 
 /**
  * FabricService的自动代理对象创建器
+ * 这里实现了 {@link Ordered} 接口，主要是为了控制BeanPostProcessor的执行顺序，可能会有需要先调用该加强
  * {@code @author:} wisecoach
  * {@code @date:} 2023/2/24 下午5:26
  * {@code @version:} 1.0.0
  */
+public abstract class AbstractFabricServiceProxyAutoCreator implements BeanPostProcessor, Ordered {
 
-
-public abstract class AbstractFabricServiceProxyAutoCreator implements BeanPostProcessor {
+    private final static int DEFAULT_PRIORITY = 5;
 
     private final FabricTransactionInterceptor interceptor;
+    private final int processor_priority;
 
     public AbstractFabricServiceProxyAutoCreator(FabricTransactionInterceptor interceptor) {
         this.interceptor = interceptor;
+        this.processor_priority = DEFAULT_PRIORITY;
+    }
+
+    public AbstractFabricServiceProxyAutoCreator(FabricTransactionInterceptor interceptor, int processor_priority) {
+        this.interceptor = interceptor;
+        this.processor_priority = processor_priority;
     }
 
     @Override
@@ -40,6 +49,11 @@ public abstract class AbstractFabricServiceProxyAutoCreator implements BeanPostP
         enhancer.setSuperclass(bean.getClass());
         enhancer.setCallback(interceptor);
         return enhancer.create();
+    }
+
+    @Override
+    public int getOrder() {
+        return processor_priority;
     }
 
     protected abstract boolean isNecessary(Object bean);
