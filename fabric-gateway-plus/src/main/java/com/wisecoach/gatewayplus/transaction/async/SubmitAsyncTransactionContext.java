@@ -6,7 +6,7 @@ import com.wisecoach.gatewayplus.transaction.TransactionStrategy;
 
 /**
  * {@link TransactionStrategy#SUBMIT_ASYNC} 策略的 {@link TransactionContext}
- * 该策略需要通知
+ * 该策略并不需要额外保存其他内容
  * {@code @author:} wisecoach
  * {@code @date:} 2023/3/3 上午9:45
  * {@code @version:} 1.0.0
@@ -14,8 +14,6 @@ import com.wisecoach.gatewayplus.transaction.TransactionStrategy;
 
 
 public class SubmitAsyncTransactionContext extends AbstractTransactionContext {
-
-    
 
     @Override
     public TransactionStrategy getStrategy() {
