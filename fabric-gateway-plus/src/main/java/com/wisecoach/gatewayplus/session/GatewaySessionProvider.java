@@ -1,5 +1,6 @@
 package com.wisecoach.gatewayplus.session;
 
+import com.wisecoach.gatewayplus.info.GatewayInfo;
 import org.hyperledger.fabric.client.Gateway;
 
 /**
@@ -11,9 +12,9 @@ import org.hyperledger.fabric.client.Gateway;
 
 public interface GatewaySessionProvider {
     /**
-     * 将gateway 封装为一个 gatewaySession
-     * @param gateway 要被封装的gateway
+     * 根据gatewayInfo 获取 gatewaySession
+     * @param gatewayInfo gateway的信息
      * @return gatewaySession
      */
-    GatewaySession getGatewaySession(Gateway gateway);
+    GatewaySession getGatewaySession(GatewayInfo gatewayInfo);
 }
