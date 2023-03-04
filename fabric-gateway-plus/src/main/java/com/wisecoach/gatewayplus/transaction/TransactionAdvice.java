@@ -34,5 +34,5 @@ public interface TransactionAdvice {
      * @param target service对象
      * @param t 抛出的异常
      */
-    void throwing(Method method, Object[] args, Object target, Throwable t);
+    void throwing(Method method, Object[] args, Object target, Throwable t) throws Throwable;
 }

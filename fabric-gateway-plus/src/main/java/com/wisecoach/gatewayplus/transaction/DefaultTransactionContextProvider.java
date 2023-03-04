@@ -3,6 +3,7 @@ package com.wisecoach.gatewayplus.transaction;
 import com.wisecoach.gatewayplus.transaction.async.SubmitAsyncTransactionContext;
 
 /**
+ * 默认实现，根据不同策略生成不同的事务上下文
  * {@code @author:} wisecoach
  * {@code @date:} 2023/3/3 下午8:04
  * {@code @version:} 1.0.0
