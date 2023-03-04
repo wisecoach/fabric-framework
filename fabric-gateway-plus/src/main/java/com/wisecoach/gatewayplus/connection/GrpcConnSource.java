@@ -22,29 +22,39 @@ public interface GrpcConnSource {
 
     /**
      * 根据key注册{@link GrpcConnInfo}，后续可以根据信息生成对应的连接
+     * Note: 需要确保线程安全，可能需要在运行过程中新增
      * @param key grpcConnKey
      * @param endpoint 要连接的端点
      */
-    void register(GrpcConnKey key, String endpoint);
+    default void register(GrpcConnKey key, String endpoint) {
+        register(key, endpoint, null, null);
+    }
 
     /**
      * 根据key注册{@link GrpcConnInfo}，后续可以根据信息生成对应的连接
-     * @param key grpcConnKey
-     * @param endpoint 要连接的端点
-     * @param authority 要求的host，如果和端点的host不同会报错
-     */
-    void register(GrpcConnKey key, String endpoint, String authority);
-
-    /**
-     * 根据key注册{@link GrpcConnInfo}，后续可以根据信息生成对应的连接
+     * Note: 需要确保线程安全，可能需要在运行过程中新增
      * @param key grpcConnKey
      * @param endpoint 要连接的端点
      * @param tlsCert tls证书，不设置就采用grpc而不是grpcs
      */
-    void register(GrpcConnKey key, String endpoint, X509Certificate tlsCert);
+    default void register(GrpcConnKey key, String endpoint, X509Certificate tlsCert) {
+        register(key, endpoint, tlsCert, null);
+    }
 
     /**
      * 根据key注册{@link GrpcConnInfo}，后续可以根据信息生成对应的连接
+     * Note: 需要确保线程安全，可能需要在运行过程中新增
+     * @param key grpcConnKey
+     * @param endpoint 要连接的端点
+     * @param authority 要求的host，如果和端点的host不同会报错
+     */
+    default void register(GrpcConnKey key, String endpoint, String authority) {
+        register(key, endpoint, null, authority);
+    }
+
+    /**
+     * 根据key注册{@link GrpcConnInfo}，后续可以根据信息生成对应的连接
+     * Note: 需要确保线程安全，可能需要在运行过程中新增
      * @param key grpcConnKey
      * @param endpoint 要连接的端点
      * @param tlsCert tls证书，不设置就采用grpc而不是grpcs

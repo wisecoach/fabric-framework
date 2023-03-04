@@ -1,24 +1,20 @@
 package com.wisecoach.gatewayplus.connection;
 
 /**
- * 该Key用于实现一个MSP使用同一个Peer节点的方案
+ * 该key用于实现所有client访问同一个peer节点的方案
  * {@code @author:} wisecoach
- * {@code @date:} 2023/3/3 下午9:47
+ * {@code @date:} 2023/3/4 下午5:02
  * {@code @version:} 1.0.0
  */
-public class MspKey implements GrpcConnKey {
 
-    private final static String prefix = "MSPID:";
 
-    private final String mspId;
+public class SinglePeerKey implements GrpcConnKey {
 
-    public MspKey(String mspId) {
-        this.mspId = mspId;
-    }
+    private final static String singlePeerKey = "singlePeer";
 
     @Override
     public String getKey() {
-        return prefix + mspId;
+        return singlePeerKey;
     }
 
     @Override

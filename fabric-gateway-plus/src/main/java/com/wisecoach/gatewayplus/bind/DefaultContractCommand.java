@@ -11,13 +11,29 @@ public class DefaultContractCommand implements ContractCommand {
     
     private final String name;
     private final String channelName;
+    private final String chaincodeName;
     private final String contractName;
     private final String transactionName;
     private final ContractCommandType contractCommandType;
 
-    public DefaultContractCommand(String name, String channelName, String contractName, String transactionName, ContractCommandType contractCommandType) {
+    public DefaultContractCommand(String name, String channelName, String chaincodeName, String transactionName, ContractCommandType contractCommandType) {
         this.name = name;
         this.channelName = channelName;
+        this.chaincodeName = chaincodeName;
+        this.contractName = null;
+        this.transactionName = transactionName;
+        this.contractCommandType = contractCommandType;
+    }
+
+    public DefaultContractCommand(String name,
+                                  String channelName,
+                                  String chaincodeName,
+                                  String contractName,
+                                  String transactionName,
+                                  ContractCommandType contractCommandType) {
+        this.name = name;
+        this.channelName = channelName;
+        this.chaincodeName = chaincodeName;
         this.contractName = contractName;
         this.transactionName = transactionName;
         this.contractCommandType = contractCommandType;
@@ -31,6 +47,11 @@ public class DefaultContractCommand implements ContractCommand {
     @Override
     public String getChannelName() {
         return channelName;
+    }
+
+    @Override
+    public String getChaincodeName() {
+        return chaincodeName;
     }
 
     @Override

@@ -10,4 +10,5 @@ package com.wisecoach.gatewayplus.connection;
 
 public interface GrpcConnKey {
     String getKey();
+
 }

@@ -1,5 +1,7 @@
 package com.wisecoach.gatewayplus.bind;
 
+import com.wisecoach.annotation.Nullable;
+
 /**
  * 用来描述一个链码方法的信息
  * {@code @author:} wisecoach
@@ -21,6 +23,13 @@ public interface ContractCommand {
     /**
      * @return 链码名
      */
+    String getChaincodeName();
+
+    /**
+     * 如果为空，表示调用链码的默认合约
+     * @return 链码合约名
+     */
+    @Nullable
     String getContractName();
 
     /**
