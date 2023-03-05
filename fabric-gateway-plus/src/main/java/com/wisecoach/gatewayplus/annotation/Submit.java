@@ -1,5 +1,7 @@
 package com.wisecoach.gatewayplus.annotation;
 
+import java.lang.annotation.*;
+
 /**
  * 用于标注一个ContractMapper的一个方法为一次Submit，表示该方法会去完成背书，并且发送给排序节点进行上链
  * {@code @author:} wisecoach
@@ -7,6 +9,9 @@ package com.wisecoach.gatewayplus.annotation;
  * {@code @version:} 1.0.0
  */
 
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@Documented
 public @interface Submit {
 
     /**

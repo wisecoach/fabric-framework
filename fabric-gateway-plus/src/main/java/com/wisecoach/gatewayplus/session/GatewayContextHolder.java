@@ -32,4 +32,8 @@ public class GatewayContextHolder {
         strategy.clearGatewayContext();
     }
 
+    public static GatewayContext getEmptyContext() {
+        return strategy.getEmptyGatewayContext();
+    }
+
 }

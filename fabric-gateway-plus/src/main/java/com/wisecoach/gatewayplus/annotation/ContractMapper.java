@@ -14,10 +14,12 @@ import java.lang.annotation.*;
 @Documented
 public @interface ContractMapper {
     /**
-     * 链码名，ContractName
-     * @return contractName
+     * 链码名，ChaincodeName
+     * @return chaincodeName
      */
     String value();
+
+    String contractName() default "";
 
     /**
      * channel名，该参数可以覆盖默认的channelName

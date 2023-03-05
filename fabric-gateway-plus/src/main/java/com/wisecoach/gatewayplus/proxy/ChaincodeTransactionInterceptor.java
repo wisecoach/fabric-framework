@@ -1,6 +1,9 @@
 package com.wisecoach.gatewayplus.proxy;
 
 import com.wisecoach.gatewayplus.annotation.ChaincodeTransaction;
+import com.wisecoach.gatewayplus.info.GatewayInfo;
+import com.wisecoach.gatewayplus.info.GatewayInfoProvider;
+import com.wisecoach.gatewayplus.session.*;
 import com.wisecoach.gatewayplus.transaction.TransactionAdvice;
 import com.wisecoach.gatewayplus.transaction.TransactionContext;
 import com.wisecoach.gatewayplus.transaction.TransactionContextHolder;
@@ -20,11 +23,19 @@ import java.lang.reflect.Method;
 public class ChaincodeTransactionInterceptor implements MethodInterceptor {
 
     private final TransactionAdvice advice;
-    private final TransactionContextProvider provider;
+    private final TransactionContextProvider transactionContextProvider;
+    private final GatewayInfoProvider gatewayInfoProvider;
+    private final GatewaySessionProvider gatewaySessionProvider;
 
-    public ChaincodeTransactionInterceptor(TransactionAdvice advice, TransactionContextProvider provider) {
+    public ChaincodeTransactionInterceptor(
+            TransactionAdvice advice,
+            TransactionContextProvider transactionContextProvider,
+            GatewayInfoProvider gatewayInfoProvider,
+            GatewaySessionProvider gatewaySessionProvider) {
         this.advice = advice;
-        this.provider = provider;
+        this.transactionContextProvider = transactionContextProvider;
+        this.gatewayInfoProvider = gatewayInfoProvider;
+        this.gatewaySessionProvider = gatewaySessionProvider;
     }
 
     /**
@@ -32,12 +43,13 @@ public class ChaincodeTransactionInterceptor implements MethodInterceptor {
      * 1. 首先要判断方法是否为 ChaincodeTransaction {@link ChaincodeTransaction}
      * 2. 读取事务的策略 {@link TransactionStrategy}
      * 3. 根据策略生成对应的事务上下文 {@link TransactionContext}，并且将上下文放入到 {@link TransactionContextHolder} 中
-     * 4. 执行 {@link TransactionAdvice#before(Method, Object[], Object)}
-     * 5. 执行被代理加强方法
-     * 6. 执行 {@link TransactionAdvice#afterReturning(Object, Method, Object[], Object)}
-     * 7. 若期间抛出异常 {@link TransactionAdvice#throwing(Method, Object[], Object, Throwable)}
-     * 8. 清空 {@link TransactionContextHolder}
-     * 9. 返回结果
+     * 4. 取得gatewayInfo，然后生成对应的gateway，将gateway存入到GatewayContextHolder
+     * 5. 执行 {@link TransactionAdvice#before(Method, Object[], Object)}
+     * 6. 执行被代理加强方法
+     * 7. 执行 {@link TransactionAdvice#afterReturning(Object, Method, Object[], Object)}
+     * 8. 若期间抛出异常 {@link TransactionAdvice#throwing(Method, Object[], Object, Throwable)}
+     * 9. 清空 {@link TransactionContextHolder} 和 {@link GatewayContextHolder}
+     * 10. 返回结果
      */
     @Override
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
@@ -49,21 +61,28 @@ public class ChaincodeTransactionInterceptor implements MethodInterceptor {
         // 2
         TransactionStrategy strategy = chaincodeTransaction.value();
         // 3
-        TransactionContext transactionContext = provider.getTransactionContext(strategy);
+        TransactionContext transactionContext = transactionContextProvider.getTransactionContext(strategy);
         TransactionContextHolder.setContext(transactionContext);
         try {
             // 4
-            advice.before(method, args, obj);
+            GatewayInfo gatewayInfo = gatewayInfoProvider.getGatewayInfo(obj, method, args);
+            GatewaySession gatewaySession = gatewaySessionProvider.getGatewaySession(gatewayInfo);
+            GatewayContext gatewayContext = GatewayContextHolder.getEmptyContext();
+            gatewayContext.setGateway(gatewaySession);
+            GatewayContextHolder.setContext(gatewayContext);
             // 5
-            Object ret = proxy.invokeSuper(obj, args);
+            advice.before(method, args, obj);
             // 6
+            Object ret = proxy.invokeSuper(obj, args);
+            // 7
             advice.afterReturning(ret, method, args, obj);
-            // 8
-            TransactionContextHolder.clearContext();
             // 9
+            TransactionContextHolder.clearContext();
+            GatewayContextHolder.clearContext();
+            // 10
             return ret;
         } catch (Throwable t) {
-            // 7
+            // 8
             advice.throwing(method, args, obj, t);
             throw t;
         }
