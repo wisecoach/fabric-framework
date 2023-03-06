@@ -9,8 +9,8 @@ package com.wisecoach.gatewayplus.event;
  */
 
 public interface FilteredBlockEventMulticaster {
-    void addListener(FilteredBlockEventListener<?> listener);
-    void removeListener(FilteredBlockEventListener<?> listener);
+    void addListener(String channel, FilteredBlockEventListener<?> listener);
+    void removeListener(String channel, FilteredBlockEventListener<?> listener);
     void clearListener();
     void multicastEvent(FilteredBlockEvent event);
 }

@@ -39,7 +39,6 @@ public class MapperScannerConfigurer
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
-        scanner.setMapperRegistry(mapperRegistry);
         scanner.scan(
             StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
     }

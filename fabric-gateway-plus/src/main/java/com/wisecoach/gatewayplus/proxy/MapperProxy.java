@@ -3,7 +3,7 @@ package com.wisecoach.gatewayplus.proxy;
 import com.wisecoach.gatewayplus.bind.ContractCommand;
 import com.wisecoach.gatewayplus.bind.ContractCommandFactory;
 import com.wisecoach.gatewayplus.bind.ContractResolver;
-import com.wisecoach.gatewayplus.config.Configuration;
+import com.wisecoach.gatewayplus.config.GatewayPlusConfiguration;
 import com.wisecoach.gatewayplus.transaction.ContractExecutor;
 
 import java.lang.reflect.InvocationHandler;
@@ -32,9 +32,9 @@ public class MapperProxy<T> implements InvocationHandler {
     /**
      * 配置类
      */
-    private final Configuration configuration;
+    private final GatewayPlusConfiguration configuration;
 
-    public MapperProxy(Class<T> mapperInterface, Map<Method, MapperMethodInvoker> methodCache, Configuration configuration) {
+    public MapperProxy(Class<T> mapperInterface, Map<Method, MapperMethodInvoker> methodCache, GatewayPlusConfiguration configuration) {
         this.mapperInterface = mapperInterface;
         this.methodCache = methodCache;
         this.configuration = configuration;

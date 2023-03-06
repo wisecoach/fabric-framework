@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/fabric-framework-sample/pom.xml" />
         <option value="$PROJECT_DIR$/fabric-gateway-plus/pom.xml" />
         <option value="$PROJECT_DIR$/fabric-gateway-plus-spring/pom.xml" />
+        <option value="$PROJECT_DIR$/fabric-gateway-plus-spring-boot/pom.xml" />
       </list>
     </option>
   </component>

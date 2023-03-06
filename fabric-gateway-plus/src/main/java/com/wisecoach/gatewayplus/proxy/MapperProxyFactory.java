@@ -1,8 +1,6 @@
 package com.wisecoach.gatewayplus.proxy;
 
-import com.wisecoach.gatewayplus.bind.ContractCommandFactory;
-import com.wisecoach.gatewayplus.config.Configuration;
-import com.wisecoach.gatewayplus.transaction.ContractExecutor;
+import com.wisecoach.gatewayplus.config.GatewayPlusConfiguration;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -29,7 +27,7 @@ public class MapperProxyFactory<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public T newInstance(Configuration configuration) {
+    public T newInstance(GatewayPlusConfiguration configuration) {
         MapperProxy<T> proxy = new MapperProxy<>(mapperInterface, methodCached, configuration);
         return  (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[]{mapperInterface}, proxy);
     }

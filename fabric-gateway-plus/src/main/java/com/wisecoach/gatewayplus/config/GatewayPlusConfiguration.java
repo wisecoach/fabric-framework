@@ -4,9 +4,7 @@ import com.wisecoach.gatewayplus.bind.ContractCommandFactory;
 import com.wisecoach.gatewayplus.bind.ContractResolver;
 import com.wisecoach.gatewayplus.proxy.MapperRegistry;
 import com.wisecoach.gatewayplus.transaction.ContractExecutor;
-import com.wisecoach.gatewayplus.transaction.ContractExecutorDelegate;
 import com.wisecoach.gatewayplus.transaction.TransactionAdvice;
-import com.wisecoach.gatewayplus.transaction.TransactionAdviceDelegate;
 import com.wisecoach.util.Assert;
 
 /**
@@ -19,7 +17,7 @@ import com.wisecoach.util.Assert;
  */
 
 
-public class Configuration {
+public class GatewayPlusConfiguration {
     /**
      * mapper注册器
      */
@@ -45,19 +43,7 @@ public class Configuration {
      */
     private ContractResolver contractResolver;
 
-    public Configuration(MapperRegistry registry, ContractCommandFactory contractCommandFactory, ContractResolver contractResolver) {
-        this.mapperRegistry = registry;
-        this.contractExecutor = new ContractExecutorDelegate();
-        this.transactionAdvice = new TransactionAdviceDelegate();
-        this.contractCommandFactory = contractCommandFactory;
-        this.contractResolver = contractResolver;
-    }
-
-    /**
-     * 主要是为了允许将 executor和 advice 注入到spring容器中，并进行自定义的策略注册，一般不需要
-     */
-    public Configuration(MapperRegistry mapperRegistry, ContractExecutor executor, TransactionAdvice transactionAdvice, ContractCommandFactory contractCommandFactory, ContractResolver contractResolver) {
-        this.mapperRegistry = mapperRegistry;
+    public GatewayPlusConfiguration(ContractExecutor executor, TransactionAdvice transactionAdvice, ContractCommandFactory contractCommandFactory, ContractResolver contractResolver) {
         this.contractExecutor = executor;
         this.transactionAdvice = transactionAdvice;
         this.contractCommandFactory = contractCommandFactory;

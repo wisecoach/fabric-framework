@@ -1,7 +1,11 @@
 package com.wisecoach.gatewayplus.proxy;
 
 import com.wisecoach.gatewayplus.bind.BindException;
-import com.wisecoach.gatewayplus.config.Configuration;
+import com.wisecoach.gatewayplus.config.GatewayPlusConfiguration;
+import com.wisecoach.gatewayplus.event.MapperAddEvent;
+import com.wisecoach.gatewayplus.event.MapperEvent;
+import com.wisecoach.gatewayplus.event.MapperEventMulticaster;
+import com.wisecoach.gatewayplus.event.MapperEventPublisher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +18,14 @@ import java.util.Map;
  */
 
 
-public class MapperRegistry {
-    private final Configuration config;
+public class MapperRegistry implements MapperEventPublisher{
+    private final GatewayPlusConfiguration config;
     private final Map<Class<?>, MapperProxyFactory<?>> knownMappers = new HashMap<>();
+    private final MapperEventMulticaster multicaster;
 
-    public MapperRegistry(Configuration config) {
+    public MapperRegistry(GatewayPlusConfiguration config, MapperEventMulticaster multicaster) {
         this.config = config;
+        this.multicaster = multicaster;
     }
 
     @SuppressWarnings("unchecked")
@@ -35,12 +41,21 @@ public class MapperRegistry {
         return knownMappers.containsKey(mapperInterface);
     }
 
+    /**
+     * 添加完Mapper会触发对应的事件
+     */
     public <T> void addMapper(Class<T> mapperInterface) {
         if (mapperInterface.isInterface()) {
             if (hasMapper(mapperInterface)) {
                 throw new BindException("该类型已经注册到MapperRegistry：" + mapperInterface.getName());
             }
             knownMappers.put(mapperInterface, new MapperProxyFactory<>(mapperInterface));
+            publish(new MapperAddEvent(mapperInterface));
         }
+    }
+
+    @Override
+    public void publish(MapperEvent event) {
+        multicaster.multicastEvent(event);
     }
 }

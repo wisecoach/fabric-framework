@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wisecoach.gatewayplus.spring.boot.configuration.FabricGatewayPlusAutoConfigure,\
+  com.wisecoach.gatewayplus.spring.boot.configuration.GatewayPlusConnAutoConfiguration

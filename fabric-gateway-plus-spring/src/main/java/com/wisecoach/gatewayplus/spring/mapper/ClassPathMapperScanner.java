@@ -18,18 +18,8 @@ import java.util.Set;
 
 public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 
-    private MapperRegistry mapperRegistry;
-
     public ClassPathMapperScanner(BeanDefinitionRegistry registry) {
         super(registry);
-    }
-
-    public MapperRegistry getMapperRegistry() {
-        return mapperRegistry;
-    }
-
-    public void setMapperRegistry(MapperRegistry mapperRegistry) {
-        this.mapperRegistry = mapperRegistry;
     }
 
     @Override

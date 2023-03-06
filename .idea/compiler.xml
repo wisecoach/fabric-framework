@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="fabric-gateway-plus-spring-boot-starter" />
         <module name="fabric-common" />
         <module name="fabric-security-spring-boot-autoconfigure" />
         <module name="fabric-gateway-plus" />
         <module name="fabric-framework-sample" />
         <module name="fabric-gateway-plus-spring" />
         <module name="fabric-security-spring-boot-starter" />
+        <module name="fabric-gateway-plus-spring-boot-autoconfigure" />
         <module name="fabric-security-spring" />
         <module name="fabric-security" />
       </profile>
