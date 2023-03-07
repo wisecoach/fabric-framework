@@ -2,6 +2,7 @@ package com.wisecoach.gatewayplus.spring.autoproxy;
 
 import com.wisecoach.gatewayplus.proxy.ChaincodeTransactionInterceptor;
 import com.wisecoach.gatewayplus.spring.annotation.ChaincodeService;
+import org.springframework.core.annotation.AnnotationUtils;
 
 /**
  * {@code @author:} wisecoach
@@ -22,6 +23,6 @@ public class AnnotatedChaincodeServiceProxyAutoCreator extends AbstractChaincode
 
     @Override
     protected boolean isNecessary(Object bean) {
-        return bean.getClass().getAnnotation(ChaincodeService.class) != null;
+        return AnnotationUtils.findAnnotation(bean.getClass(), ChaincodeService.class) != null;
     }
 }

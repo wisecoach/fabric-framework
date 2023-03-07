@@ -3,6 +3,7 @@ package com.wisecoach.security.user;
 import org.hyperledger.fabric.client.identity.Signer;
 
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 
 /**
  * 用于该框架的用户信息，会包含用户的signer、证书、mspID等信息
@@ -29,5 +30,5 @@ public interface User {
      * 取得当前用户的证书
      * @return certificate
      */
-    Certificate getCertificate();
+    X509Certificate getCertificate();
 }

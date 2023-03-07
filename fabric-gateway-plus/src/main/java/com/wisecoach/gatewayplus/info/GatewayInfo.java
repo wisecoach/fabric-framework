@@ -2,7 +2,7 @@ package com.wisecoach.gatewayplus.info;
 
 import org.hyperledger.fabric.client.identity.Signer;
 
-import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 
 /**
  * 不装了，就是 另一个框架的 User，我只是为了拆开（为什么呢？）才搞了一样的接口换个名字
@@ -29,5 +29,5 @@ public interface GatewayInfo {
      * 取得gateway所需的证书
      * @return certificate
      */
-    Certificate getCertificate();
+    X509Certificate getCertificate();
 }

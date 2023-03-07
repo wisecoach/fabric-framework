@@ -2,6 +2,7 @@ package com.wisecoach.security.spring.autoproxy;
 
 import com.wisecoach.security.interceptor.FabricTransactionInterceptor;
 import com.wisecoach.security.spring.annotation.FabricService;
+import org.springframework.core.annotation.AnnotationUtils;
 
 /**
  * {@code @author:} wisecoach
@@ -18,7 +19,8 @@ public class AnnotatedFabricServiceProxyAutoCreator extends AbstractFabricServic
 
     @Override
     protected boolean isNecessary(Object bean) {
-        FabricService annotation = bean.getClass().getAnnotation(FabricService.class);
+        // 可能这个对象被动态代理过，同时得去找其父类和接口的注解
+        FabricService annotation = AnnotationUtils.findAnnotation(bean.getClass(), FabricService.class);
         return annotation != null;
     }
 }

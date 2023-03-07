@@ -29,20 +29,6 @@ public class GrpcConnSourceDelegate implements GrpcConnSource {
      */
     private final Map<Class<? extends GrpcConnKey>, GrpcConnSource> sources = new HashMap<>();
 
-    public GrpcConnSourceDelegate() {
-        init();
-    }
-
-    /**
-     * 初始化要使用哪些源
-     */
-    private void init() {
-        // 注册单节点级的连接源
-        registerConnSource(SinglePeerKey.class, new SinglePeerGrpcConnSource());
-        // 注册MSP级的连接源
-        registerConnSource(MspKey.class, new MspGrpcConnSource());
-    }
-
     /**
      * 注册数据源
      * @param keyClazz key的类型

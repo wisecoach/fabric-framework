@@ -16,5 +16,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Service
+@Inherited
 public @interface FabricService {
 }

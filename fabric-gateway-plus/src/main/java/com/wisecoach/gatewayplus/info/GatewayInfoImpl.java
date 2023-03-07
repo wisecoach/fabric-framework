@@ -3,6 +3,7 @@ package com.wisecoach.gatewayplus.info;
 import org.hyperledger.fabric.client.identity.Signer;
 
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 
 /**
  * {@code @author:} wisecoach
@@ -15,9 +16,9 @@ public class GatewayInfoImpl implements GatewayInfo {
 
     private final String mspId;
     private final Signer signer;
-    private final Certificate certificate;
+    private final X509Certificate certificate;
 
-    public GatewayInfoImpl(String mspId, Signer signer, Certificate certificate) {
+    public GatewayInfoImpl(String mspId, Signer signer, X509Certificate certificate) {
         this.mspId = mspId;
         this.signer = signer;
         this.certificate = certificate;
@@ -34,7 +35,7 @@ public class GatewayInfoImpl implements GatewayInfo {
     }
 
     @Override
-    public Certificate getCertificate() {
+    public X509Certificate getCertificate() {
         return certificate;
     }
 }

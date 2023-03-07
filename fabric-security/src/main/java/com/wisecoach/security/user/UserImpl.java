@@ -3,6 +3,7 @@ package com.wisecoach.security.user;
 import org.hyperledger.fabric.client.identity.Signer;
 
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 
 /**
  * 该框架的 {@link User} 的默认实现
@@ -16,9 +17,9 @@ public class UserImpl implements User {
 
     private final String mspId;
     private final Signer signer;
-    private final Certificate certificate;
+    private final X509Certificate certificate;
 
-    public UserImpl(String mspId, Signer signer, Certificate certificate) {
+    public UserImpl(String mspId, Signer signer, X509Certificate certificate) {
         this.mspId = mspId;
         this.signer = signer;
         this.certificate = certificate;
@@ -35,7 +36,7 @@ public class UserImpl implements User {
     }
 
     @Override
-    public Certificate getCertificate() {
+    public X509Certificate getCertificate() {
         return certificate;
     }
 }

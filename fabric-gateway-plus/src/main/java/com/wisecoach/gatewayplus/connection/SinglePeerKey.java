@@ -12,6 +12,8 @@ public class SinglePeerKey implements GrpcConnKey {
 
     private final static String singlePeerKey = "singlePeer";
 
+    public final static SinglePeerKey INSTANCE = new SinglePeerKey();
+
     @Override
     public String getKey() {
         return singlePeerKey;

@@ -14,12 +14,15 @@ import com.wisecoach.gatewayplus.proxy.ChaincodeTransactionInterceptor;
 import com.wisecoach.gatewayplus.proxy.MapperRegistry;
 import com.wisecoach.gatewayplus.session.GatewaySessionProvider;
 import com.wisecoach.gatewayplus.session.GatewaySessionProviderImpl;
+import com.wisecoach.gatewayplus.session.GrpcConnFetcher;
+import com.wisecoach.gatewayplus.session.SinglePeerGrpcConnFetcher;
 import com.wisecoach.gatewayplus.spring.autoproxy.AnnotatedChaincodeServiceProxyAutoCreator;
 import com.wisecoach.gatewayplus.spring.mapper.MapperScannerConfigurer;
 import com.wisecoach.gatewayplus.transaction.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
@@ -88,9 +91,16 @@ public class FabricGatewayPlusAutoConfigure {
 
     // ------------------- session ------------------------
 
+
     @Bean
-    public GatewaySessionProvider gatewaySessionProvider() {
-        return new GatewaySessionProviderImpl();
+    @ConditionalOnMissingBean
+    public GrpcConnFetcher grpcConnFetcher(@Qualifier("grpcConnSource") GrpcConnSource source) {
+        return new SinglePeerGrpcConnFetcher(source);
+    }
+
+    @Bean
+    public GatewaySessionProvider gatewaySessionProvider(GrpcConnFetcher fetcher) {
+        return new GatewaySessionProviderImpl(fetcher);
     }
 
     // ------------------- transaction --------------------
