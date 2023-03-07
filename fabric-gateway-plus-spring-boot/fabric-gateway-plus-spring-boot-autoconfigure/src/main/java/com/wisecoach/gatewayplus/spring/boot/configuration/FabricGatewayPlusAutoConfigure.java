@@ -3,22 +3,24 @@ package com.wisecoach.gatewayplus.spring.boot.configuration;
 import com.wisecoach.gatewayplus.bind.AnnotatedContractCommandFactory;
 import com.wisecoach.gatewayplus.bind.ContractCommandFactory;
 import com.wisecoach.gatewayplus.bind.ContractResolver;
+import com.wisecoach.gatewayplus.bind.DefaultContractResolver;
 import com.wisecoach.gatewayplus.config.GatewayPlusConfiguration;
 import com.wisecoach.gatewayplus.connection.GrpcConnSource;
-import com.wisecoach.gatewayplus.connection.GrpcConnSourceDelegate;
-import com.wisecoach.gatewayplus.connection.PooledGrpcConnSource;
 import com.wisecoach.gatewayplus.event.*;
 import com.wisecoach.gatewayplus.info.GatewayInfoProvider;
 import com.wisecoach.gatewayplus.info.NoOpGatewayInfoProvider;
-import com.wisecoach.gatewayplus.proxy.ChaincodeTransactionInterceptor;
 import com.wisecoach.gatewayplus.proxy.MapperRegistry;
 import com.wisecoach.gatewayplus.session.GatewaySessionProvider;
 import com.wisecoach.gatewayplus.session.GatewaySessionProviderImpl;
 import com.wisecoach.gatewayplus.session.GrpcConnFetcher;
 import com.wisecoach.gatewayplus.session.SinglePeerGrpcConnFetcher;
-import com.wisecoach.gatewayplus.spring.autoproxy.AnnotatedChaincodeServiceProxyAutoCreator;
+import com.wisecoach.gatewayplus.spring.interceptor.ChaincodeTransactionInterceptor;
+import com.wisecoach.gatewayplus.spring.interceptor.TransactionAttributeSourceAdvisor;
 import com.wisecoach.gatewayplus.spring.mapper.MapperScannerConfigurer;
 import com.wisecoach.gatewayplus.transaction.*;
+import com.wisecoach.gatewayplus.transaction.async.NoopSubmitAsyncFilteredBlockListener;
+import com.wisecoach.gatewayplus.transaction.async.SubmitAsyncContractExecutor;
+import com.wisecoach.gatewayplus.transaction.async.SubmitAsyncFilteredBlockListener;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -32,7 +34,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,11 +69,10 @@ public class FabricGatewayPlusAutoConfigure {
         return new AnnotatedContractCommandFactory(properties.getDefaultChannel());
     }
 
-    // TODO 现在还没有实现
     @Bean
     @ConditionalOnMissingBean
     public ContractResolver contractResolver() {
-        return null;
+        return new DefaultContractResolver();
     }
 
 
@@ -108,8 +108,22 @@ public class FabricGatewayPlusAutoConfigure {
     // TODO 之后这里肯定有一些实现类需要从容器中拿依赖，只能在这里注册了
     @Bean
     @Primary
-    public ContractExecutor contractExecutor() {
+    public ContractExecutorDelegate contractExecutor() {
         return new ContractExecutorDelegate();
+    }
+
+    @Bean
+    public SubmitAsyncFilteredBlockListener submitAsyncFilteredBlockListener() {
+        return new NoopSubmitAsyncFilteredBlockListener();
+    }
+
+    @Bean
+    public SubmitAsyncContractExecutor submitAsyncContractExecutor(
+            ContractExecutorDelegate delegate,
+            SubmitAsyncFilteredBlockListener listener) {
+        SubmitAsyncContractExecutor executor = new SubmitAsyncContractExecutor(listener);
+        delegate.register(TransactionStrategy.SUBMIT_ASYNC, executor);
+        return executor;
     }
 
     // TODO 之后这里肯定有一些实现类需要从容器中拿依赖，只能在这里注册了
@@ -125,16 +139,6 @@ public class FabricGatewayPlusAutoConfigure {
     }
 
     // ------------------- proxy --------------------------
-
-    @Bean
-    public AnnotatedChaincodeServiceProxyAutoCreator chaincodeServiceProxyAutoCreator(
-            TransactionAdvice advice,
-            TransactionContextProvider transactionContextProvider,
-            GatewayInfoProvider gatewayInfoProvider,
-            GatewaySessionProvider gatewaySessionProvider) {
-        ChaincodeTransactionInterceptor interceptor = new ChaincodeTransactionInterceptor(advice, transactionContextProvider, gatewayInfoProvider, gatewaySessionProvider);
-        return new AnnotatedChaincodeServiceProxyAutoCreator(interceptor);
-    }
 
     @Bean
     public MapperRegistry mapperRegistry(
@@ -185,6 +189,30 @@ public class FabricGatewayPlusAutoConfigure {
         public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
             this.beanFactory = beanFactory;
         }
+    }
+
+    // ------------------- spring-service -----------------
+
+    @Bean
+    public TransactionAttributeSource transactionAttributeSource() {
+        return new AnnotationTransactionAttributeSource();
+    }
+
+    @Bean
+    public ChaincodeTransactionInterceptor chaincodeTransactionInterceptor(
+            TransactionAttributeSource source,
+            TransactionAdvice advice,
+            TransactionContextProvider contextProvider,
+            GatewayInfoProvider gatewayInfoProvider,
+            GatewaySessionProvider gatewaySessionProvider
+    ) {
+        return new ChaincodeTransactionInterceptor(source, advice, contextProvider, gatewayInfoProvider, gatewaySessionProvider);
+    }
+
+    @Bean
+    public TransactionAttributeSourceAdvisor transactionAttributeSourceAdvisor(
+            ChaincodeTransactionInterceptor chaincodeTransactionInterceptor) {
+        return new TransactionAttributeSourceAdvisor(chaincodeTransactionInterceptor);
     }
 
 }

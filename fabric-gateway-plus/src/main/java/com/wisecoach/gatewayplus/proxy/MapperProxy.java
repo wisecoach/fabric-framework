@@ -88,7 +88,7 @@ public class MapperProxy<T> implements InvocationHandler {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Exception {
-            return mapperMethod.execute(args);
+            return mapperMethod.execute(method, args);
         }
     }
 }

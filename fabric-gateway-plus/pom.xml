@@ -15,7 +15,7 @@
         <fabric-framework.version>1.0-SNAPSHOT</fabric-framework.version>
         <fabric-gateway.version>1.2.2</fabric-gateway.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
-        <cglib.version>3.3.0</cglib.version>
+        <genson.version>1.5</genson.version>
     </properties>
 
     <dependencies>
@@ -34,11 +34,13 @@
             <artifactId>commons-pool2</artifactId>
             <version>${commons-pool2.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.owlike/genson -->
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>${cglib.version}</version>
+            <groupId>com.owlike</groupId>
+            <artifactId>genson</artifactId>
+            <version>${genson.version}</version>
         </dependency>
+
     </dependencies>
 
 </project>

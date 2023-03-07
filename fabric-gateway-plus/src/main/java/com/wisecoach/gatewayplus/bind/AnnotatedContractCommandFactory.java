@@ -58,7 +58,7 @@ public class AnnotatedContractCommandFactory implements ContractCommandFactory {
             transactionName = evalute.value();
         } else if (submit != null) {
             type = ContractCommandType.SUBMIT;
-            contractName = submit.value();
+            transactionName = submit.value();
         } else {
             throw new BindException("该方法需要使用注解@Evaluate或@Submit:" + method.getName());
         }

@@ -24,4 +24,9 @@ public @interface ChaincodeTransaction {
      * @return strategy
      */
     TransactionStrategy value() default TransactionStrategy.SUBMIT_ASYNC;
+
+    /**
+     * 事务名
+     */
+    String name() default "";
 }

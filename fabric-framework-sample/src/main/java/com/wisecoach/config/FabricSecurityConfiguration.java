@@ -2,8 +2,10 @@ package com.wisecoach.config;
 
 import com.wisecoach.fabric.security.CustomUserInfoProvider;
 import com.wisecoach.fabric.security.CustomUserProvider;
+import com.wisecoach.fabric.security.CustomUserProvider2;
 import com.wisecoach.security.user.UserProviderManager;
 import com.wisecoach.security.userinfo.UserInfoProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,8 +24,12 @@ public class FabricSecurityConfiguration {
     }
 
     @Bean
-    public UserProviderManager addUserProvider(UserProviderManager manager){
-        manager.register(new CustomUserProvider());
-        return manager;
+    public CustomUserProvider customUserProvider() {
+        return new CustomUserProvider();
+    }
+
+    @Bean
+    public CustomUserProvider2 customUserProvider2() {
+        return new CustomUserProvider2();
     }
 }

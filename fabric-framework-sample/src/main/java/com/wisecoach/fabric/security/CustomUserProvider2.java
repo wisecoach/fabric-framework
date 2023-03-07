@@ -25,7 +25,7 @@ import java.security.cert.X509Certificate;
  * {@code @version:} 1.0.0
  */
 
-public class CustomUserProvider implements UserProvider {
+public class CustomUserProvider2 implements UserProvider {
 
     private final static String pvtPath = "/mnt/F/fabric-samples/fabric-samples-2.4.8/fabric-samples/test-network/" +
             "organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/priv_key";

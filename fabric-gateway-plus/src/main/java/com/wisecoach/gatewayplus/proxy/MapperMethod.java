@@ -50,7 +50,7 @@ public class MapperMethod {
      * 6. 解析返回结果
      * 7. 返回结果
      */
-    public Object execute(Object[] args) throws Exception {
+    public Object execute(Method method, Object[] args) throws Exception {
         // 1
         Gateway gateway = GatewayContextHolder.getContext().getGateway();
         if (gateway == null) {
@@ -68,12 +68,12 @@ public class MapperMethod {
             // 5
             byte[] evaluate = executor.evaluate(contract, command.getTransactionName(), strArgs);
             // 6
-            ret = resolver.resolveResult(evaluate);
+            ret = resolver.resolveResult(evaluate, method);
         } else if (ContractCommandType.SUBMIT.equals(command.getContractCommandType())) {
             // 5
             byte[] submit = executor.submit(contract, command.getTransactionName(), strArgs);
             // 6
-            ret = resolver.resolveResult(submit);
+            ret = resolver.resolveResult(submit, method);
         }
         // 7
         return ret;

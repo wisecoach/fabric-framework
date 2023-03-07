@@ -1,3 +1,4 @@
-/mnt/F/fabric/fabric-framework/fabric-security-spring/src/main/java/com/wisecoach/security/spring/autoproxy/AbstractFabricServiceProxyAutoCreator.java
-/mnt/F/fabric/fabric-framework/fabric-security-spring/src/main/java/com/wisecoach/security/spring/autoproxy/AnnotatedFabricServiceProxyAutoCreator.java
+/mnt/F/fabric/fabric-framework/fabric-security-spring/src/main/java/com/wisecoach/security/spring/interceptor/FabricTransactionInterceptor.java
+/mnt/F/fabric/fabric-framework/fabric-security-spring/src/main/java/com/wisecoach/security/spring/interceptor/UserAttributeSourceAdvisor.java
 /mnt/F/fabric/fabric-framework/fabric-security-spring/src/main/java/com/wisecoach/security/spring/annotation/FabricService.java
+/mnt/F/fabric/fabric-framework/fabric-security-spring/src/main/java/com/wisecoach/security/spring/interceptor/UserAttributeSourcePointcut.java

@@ -2,7 +2,8 @@ fabric:
   gatewayplus:
     conn:
       single-peer-info:
-        authority: peer0.org1.example.com
         tls-cert-path: /mnt/F/fabric-samples/fabric-samples-2.4.8/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
-        endpoint: peer0.org1.example.com:7051
-      test: true
+        endpoint: localhost:7051
+        authority: peer0.org1.example.com
+    pool:
+      use-pool: false

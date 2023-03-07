@@ -1,5 +1,7 @@
 package com.wisecoach.gatewayplus.bind;
 
+import java.lang.reflect.Method;
+
 /**
  * Contract方法的解析器，用于解析链码的参数和返回的结果
  * {@code @author:} wisecoach
@@ -20,5 +22,5 @@ public interface ContractResolver {
      * @param result 链码的执行结果
      * @return 解析后的返回值
      */
-    Object resolveResult(byte[] result);
+    Object resolveResult(byte[] result, Method method);
 }

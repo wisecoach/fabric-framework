@@ -21,6 +21,11 @@ public @interface FabricTransaction {
     boolean value() default true;
 
     /**
+     * 业务名
+     */
+    String name() default "";
+
+    /**
      * 限定使用的providers，要求该方法必须采用继承自提供的providers的实现对象来提供User
      * @return providers
      */

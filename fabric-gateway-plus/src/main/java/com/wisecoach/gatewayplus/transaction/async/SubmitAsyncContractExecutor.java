@@ -26,7 +26,6 @@ public class SubmitAsyncContractExecutor implements ContractExecutor {
      * @param contract 要执行的链码对象
      * @param transactionName 要执行的链码交易名
      * @param args 链码交易参数
-     * @return
      */
     @Override
     public byte[] evaluate(Contract contract, String transactionName, String[] args) {

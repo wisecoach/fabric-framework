@@ -1,2 +1,3 @@
 com/wisecoach/security/spring/boot/configuration/FabricSecurityAutoConfigure.class
+META-INF/spring-configuration-metadata.json
 com/wisecoach/security/spring/boot/configuration/FabricSecurityProperties.class

@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 
 /**
  * 用于实现不同事务策略的Advice，它会处理从service方法执行前、执行后、抛出异常的三种情况进行不同的处理，从而实现不同策略的事务
+ * 这个不是真的 SpringAOP 里面的Advice，实际上的Advice是interceptor，不过interceptor中的实现不同事务策略的不同逻辑由该接口的子类实现
  * {@code @author:} wisecoach
  * {@code @date:} 2023/3/3 下午8:09
  * {@code @version:} 1.0.0

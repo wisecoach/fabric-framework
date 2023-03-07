@@ -55,7 +55,7 @@ public class ContractExecutorDelegate implements ContractExecutor {
     /**
      * 注册一个策略和执行器的映射
      */
-    private void register(TransactionStrategy strategy, ContractExecutor executor) {
+    public void register(TransactionStrategy strategy, ContractExecutor executor) {
         Assert.notNull(executor, "executor不可为空");
         executors.put(strategy, executor);
     }

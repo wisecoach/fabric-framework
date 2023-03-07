@@ -4,6 +4,7 @@ import com.wisecoach.security.userinfo.UserInfo;
 import com.wisecoach.util.Assert;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * 采用数组存储provider的一个实现
@@ -61,6 +62,6 @@ public class ArrayUserProviderManager implements UserProviderManager {
     public void register(UserProvider userProvider) {
         // 加入并根据优先级排序
         providers.add(userProvider);
-        providers.sort((a, b) -> b.getPriority() - a.getPriority());
+        providers.sort(Comparator.comparingInt(UserProvider::getPriority));
     }
 }

@@ -1,5 +1,6 @@
 package com.wisecoach.gatewayplus.session;
 
+import com.wisecoach.util.StringUtils;
 import io.grpc.CallOptions;
 import org.hyperledger.fabric.client.*;
 import org.hyperledger.fabric.protos.common.Block;
@@ -8,6 +9,7 @@ import org.hyperledger.fabric.protos.peer.FilteredBlock;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.UnaryOperator;
 
 /**
@@ -27,8 +29,9 @@ public class NetworkSession implements Network{
 
     /**
      * 要缓存的contracts
+     * TODO 这里错了，还有一个Contract
      */
-    private final Map<String, Contract> contracts = new HashMap<>();
+    private final Map<String, Contract> contracts = new ConcurrentHashMap<>();
 
     NetworkSession(Network network) {
         this.network = network;
@@ -48,7 +51,11 @@ public class NetworkSession implements Network{
     public Contract getContract(String chaincodeName, String contractName) {
         Contract contract = contracts.get(chaincodeName);
         if (contract == null) {
-            contract = network.getContract(chaincodeName, contractName);
+            if (StringUtils.hasLength(contractName)) {
+                contract = network.getContract(chaincodeName, contractName);
+            } else {
+                contract = network.getContract(chaincodeName);
+            }
             contracts.put(chaincodeName, contract);
         }
         return contract;
