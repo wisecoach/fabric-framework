@@ -1,5 +1,6 @@
 package com.wisecoach.gatewayplus.transaction.async;
 
+import com.wisecoach.gatewayplus.transaction.ChaincodeException;
 import com.wisecoach.gatewayplus.transaction.ContractExecutor;
 import com.wisecoach.gatewayplus.transaction.TransactionStrategy;
 import org.hyperledger.fabric.client.*;
@@ -32,7 +33,7 @@ public class SubmitAsyncContractExecutor implements ContractExecutor {
         try {
              return contract.evaluateTransaction(transactionName, args);
         } catch (GatewayException e) {
-            throw new RuntimeException(e);
+            throw new ChaincodeException("链码执行失败", e);
         }
     }
 
@@ -53,7 +54,7 @@ public class SubmitAsyncContractExecutor implements ContractExecutor {
             listener.subscribe(transaction.getTransactionId());
             return submitAsync.getResult();
         } catch (EndorseException | SubmitException e) {
-            throw new RuntimeException(e);
+            throw new ChaincodeException("链码执行失败", e);
         }
     }
 }

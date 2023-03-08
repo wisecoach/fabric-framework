@@ -19,7 +19,6 @@ public class TestController {
 
     @GetMapping("/test")
     public String test() {
-        testService.test();
-        return "ok";
+        return testService.test();
     }
 }

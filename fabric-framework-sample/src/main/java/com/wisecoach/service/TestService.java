@@ -7,5 +7,5 @@ package com.wisecoach.service;
  */
 
 public interface TestService {
-    void test();
+    String test();
 }

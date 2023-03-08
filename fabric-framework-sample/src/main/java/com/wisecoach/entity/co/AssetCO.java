@@ -1,30 +1,25 @@
 package com.wisecoach.entity.co;
 
-import java.io.Serializable;
+import com.owlike.genson.annotation.JsonProperty;
+
+import java.util.Objects;
 
 /**
  * {@code @author:} wisecoach
  * {@code @date:} 2023/3/7 下午3:31
  * {@code @version:} 1.0.0
  */
-public class AssetCO implements Serializable, Cloneable {
-    private String assetID;
+public final class AssetCO {
 
-    private String color;
+    private final String assetID;
 
-    private int size;
+    private final String color;
 
-    private String owner;
+    private final int size;
 
-    private int appraisedValue;
+    private final String owner;
 
-    public AssetCO(String assetID, String color, int size, String owner, int appraisedValue) {
-        this.assetID = assetID;
-        this.color = color;
-        this.size = size;
-        this.owner = owner;
-        this.appraisedValue = appraisedValue;
-    }
+    private final int appraisedValue;
 
     public String getAssetID() {
         return assetID;
@@ -46,23 +41,45 @@ public class AssetCO implements Serializable, Cloneable {
         return appraisedValue;
     }
 
-    public void setAssetID(String assetID) {
+    public AssetCO(@JsonProperty("assetID") final String assetID, @JsonProperty("color") final String color,
+                 @JsonProperty("size") final int size, @JsonProperty("owner") final String owner,
+                 @JsonProperty("appraisedValue") final int appraisedValue) {
         this.assetID = assetID;
-    }
-
-    public void setColor(String color) {
         this.color = color;
-    }
-
-    public void setSize(int size) {
         this.size = size;
-    }
-
-    public void setOwner(String owner) {
         this.owner = owner;
+        this.appraisedValue = appraisedValue;
     }
 
-    public void setAppraisedValue(int appraisedValue) {
-        this.appraisedValue = appraisedValue;
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if ((obj == null) || (getClass() != obj.getClass())) {
+            return false;
+        }
+
+        AssetCO other = (AssetCO) obj;
+
+        return Objects.deepEquals(
+                new String[] {getAssetID(), getColor(), getOwner()},
+                new String[] {other.getAssetID(), other.getColor(), other.getOwner()})
+                &&
+                Objects.deepEquals(
+                        new int[] {getSize(), getAppraisedValue()},
+                        new int[] {other.getSize(), other.getAppraisedValue()});
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getAppraisedValue());
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " [assetID=" + assetID + ", color="
+                + color + ", size=" + size + ", owner=" + owner + ", appraisedValue=" + appraisedValue + "]";
     }
 }

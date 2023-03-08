@@ -34,12 +34,6 @@
             <artifactId>commons-pool2</artifactId>
             <version>${commons-pool2.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.owlike/genson -->
-        <dependency>
-            <groupId>com.owlike</groupId>
-            <artifactId>genson</artifactId>
-            <version>${genson.version}</version>
-        </dependency>
 
     </dependencies>
 

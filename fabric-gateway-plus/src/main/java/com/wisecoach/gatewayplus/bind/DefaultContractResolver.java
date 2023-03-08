@@ -1,8 +1,6 @@
 package com.wisecoach.gatewayplus.bind;
 
-import com.owlike.genson.Genson;
-import com.owlike.genson.GensonBuilder;
-import org.bouncycastle.util.Strings;
+import com.wisecoach.util.JSONUtils;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -17,27 +15,16 @@ import java.util.stream.Collectors;
 
 public class DefaultContractResolver implements ContractResolver {
 
-    private final Genson genson;
-
-    public DefaultContractResolver() {
-        genson = new GensonBuilder()
-                .useIndentation(true)
-                .useRuntimeType(true)
-                .useClassMetadataWithStaticType(false)
-                .useClassMetadata(true)
-                .create();
-    }
-
     @Override
     public String[] resolveArgs(Object[] args) {
         if (args == null) {
             return new String[]{};
         }
-        return Arrays.stream(args).map(genson::serialize).collect(Collectors.toList()).toArray(new String[]{});
+        return Arrays.stream(args).map(JSONUtils::serialize).collect(Collectors.toList()).toArray(new String[]{});
     }
 
     @Override
     public Object resolveResult(byte[] result, Method method) {
-        return genson.deserialize(result, method.getReturnType());
+        return JSONUtils.deserialize(result, method.getReturnType());
     }
 }

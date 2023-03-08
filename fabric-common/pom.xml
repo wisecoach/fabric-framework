@@ -12,7 +12,16 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <fabric-framework.version>1.0-SNAPSHOT</fabric-framework.version>
+        <genson.version>1.5</genson.version>
     </properties>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.owlike/genson -->
+        <dependency>
+            <groupId>com.owlike</groupId>
+            <artifactId>genson</artifactId>
+            <version>${genson.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
