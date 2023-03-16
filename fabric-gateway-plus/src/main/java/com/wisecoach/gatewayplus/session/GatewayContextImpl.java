@@ -23,4 +23,12 @@ public class GatewayContextImpl implements GatewayContext {
     public void setGateway(Gateway gateway) {
         this.gateway = gateway;
     }
+
+    @Override
+    public void clearGateway() {
+        if (gateway != null) {
+            gateway.close();
+        }
+        gateway = null;
+    }
 }

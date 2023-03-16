@@ -29,7 +29,7 @@ public interface UserProvider {
     boolean support(UserInfo userInfo);
 
     /**
-     * 取得该provider的优先级，优先级越高的provider会优先被调度
+     * 取得该provider的优先级，优先级越小的provider会优先被调度
      * @return priority
      */
     int getPriority();

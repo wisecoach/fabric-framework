@@ -13,7 +13,6 @@ import java.lang.reflect.Method;
 
 
 public class CustomUserInfoProvider extends AbstractUserInfoProvider {
-
     @Override
     protected UserInfo fetchUserInfo(Object obj, Method method, Object[] args) {
         return new UserInfoImpl("admin", "adminpw");

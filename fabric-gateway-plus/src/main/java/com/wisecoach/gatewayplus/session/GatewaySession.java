@@ -1,5 +1,6 @@
 package com.wisecoach.gatewayplus.session;
 
+import io.grpc.ManagedChannel;
 import org.hyperledger.fabric.client.*;
 import org.hyperledger.fabric.client.identity.Identity;
 
@@ -21,12 +22,17 @@ public class GatewaySession implements Gateway{
      */
     private final Gateway gateway;
     /**
+     * 持有channel，方便关闭channel
+     */
+    private final ManagedChannel channel;
+    /**
      * 要缓存的networks
      */
     private final Map<String, Network> networks = new HashMap<>();
 
-    GatewaySession(Gateway gateway) {
+    GatewaySession(Gateway gateway, ManagedChannel channel) {
         this.gateway = gateway;
+        this.channel = channel;
     }
 
     /**
@@ -119,8 +125,12 @@ public class GatewaySession implements Gateway{
         return gateway.newBlockAndPrivateDataEventsRequest(bytes);
     }
 
+    /**
+     * 关闭channel，如果是缓存channel就会返回缓冲池
+     */
     @Override
     public void close() {
+        channel.shutdown();
         gateway.close();
     }
 }

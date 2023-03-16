@@ -17,6 +17,7 @@ public class ThreadLocalGatewayContextHolderStrategy implements GatewayContextHo
     @Override
     public void setGatewayContext(GatewayContext context) {
         Assert.notNull(context, "不可存储空的context");
+        clearGatewayContext();
         contextHolder.set(context);
     }
 
@@ -32,6 +33,10 @@ public class ThreadLocalGatewayContextHolderStrategy implements GatewayContextHo
 
     @Override
     public void clearGatewayContext() {
+        GatewayContext context = contextHolder.get();
+        if (context != null) {
+            context.clearGateway();
+        }
         contextHolder.remove();
     }
 

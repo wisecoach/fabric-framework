@@ -3,6 +3,7 @@ package com.wisecoach.service.impl;
 import com.wisecoach.contract.BasicContract;
 import com.wisecoach.entity.co.AssetCO;
 import com.wisecoach.gatewayplus.annotation.ChaincodeTransaction;
+import com.wisecoach.gatewayplus.transaction.TransactionStrategy;
 import com.wisecoach.security.annotation.FabricTransaction;
 import com.wisecoach.security.spring.annotation.FabricService;
 import com.wisecoach.service.TestService;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
  */
 
 @FabricService
-@Service
 public class TestServiceImpl implements TestService {
 
     @Autowired
@@ -25,7 +25,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     @FabricTransaction
-    @ChaincodeTransaction
+    @ChaincodeTransaction(TransactionStrategy.SUBMIT_ASYNC)
     public String test() {
         basicContract.initLedger();
         AssetCO assetCO = basicContract.readAsset("asset1");

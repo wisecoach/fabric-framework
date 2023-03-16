@@ -62,12 +62,13 @@ public class PooledGrpcConnSource extends BaseKeyedPooledObjectFactory<GrpcConnK
      */
     @Override
     public ManagedChannel create(GrpcConnKey key) throws Exception {
-        return grpcConnSource.getConnection(key);
+        ManagedChannel connection = grpcConnSource.getConnection(key);
+        return new PooledManagedChannel(key, connection, pool);
     }
 
     @Override
     public PooledObject<ManagedChannel> wrap(ManagedChannel value) {
-        return new PooledManagedChannel(value);
+        return new PooledManagedChannelObject(value);
     }
 
     /**
@@ -78,7 +79,7 @@ public class PooledGrpcConnSource extends BaseKeyedPooledObjectFactory<GrpcConnK
         return !p.getObject().isShutdown();
     }
 
-    static class PooledManagedChannel extends DefaultPooledObject<ManagedChannel> {
+    static class PooledManagedChannelObject extends DefaultPooledObject<ManagedChannel> {
 
         /**
          * Creates a new instance that wraps the provided object so that the pool can
@@ -86,7 +87,7 @@ public class PooledGrpcConnSource extends BaseKeyedPooledObjectFactory<GrpcConnK
          *
          * @param object The object to wrap
          */
-        private PooledManagedChannel(ManagedChannel object) {
+        private PooledManagedChannelObject(ManagedChannel object) {
             super(object);
         }
     }

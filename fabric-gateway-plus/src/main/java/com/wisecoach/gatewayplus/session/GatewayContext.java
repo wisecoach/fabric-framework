@@ -12,4 +12,9 @@ import org.hyperledger.fabric.client.Gateway;
 public interface GatewayContext {
     Gateway getGateway();
     void setGateway(Gateway gateway);
+
+    /**
+     * 清理gateway，如果gateway不为空，则会调用gateway.close()
+     */
+    void clearGateway();
 }
