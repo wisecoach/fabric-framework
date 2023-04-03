@@ -24,7 +24,7 @@ public interface GatewayContextHolderStrategy {
     GatewayContext getGatewayContext();
 
     /**
-     * 清除当前的context
+     * 清除当前的context，如果context不为空，还会调用context的clear方法
      */
     void clearGatewayContext();
 
