@@ -32,6 +32,6 @@ public class GatewaySessionProviderImpl implements GatewaySessionProvider {
                 .connection(channel)
                 .signer(gatewayInfo.getSigner())
                 .connect();
-        return new GatewaySession(gateway);
+        return new GatewaySession(gateway, channel);
     }
 }
