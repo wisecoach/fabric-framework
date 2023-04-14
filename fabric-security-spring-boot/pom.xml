@@ -41,4 +41,14 @@
         </dependencies>
     </dependencyManagement>
 
+    <distributionManagement>
+        <repository>
+            <id>zlpt-releases</id>
+            <url>http://10.7.95.131:8081/repository/zlpt-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>zlpt-mixed</id>
+            <url>http://10.7.95.131:8081/repository/zlpt-mixed/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
