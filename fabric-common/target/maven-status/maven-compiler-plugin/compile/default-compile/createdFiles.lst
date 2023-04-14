@@ -1,5 +1,6 @@
 com/wisecoach/util/StringUtils.class
 com/wisecoach/annotation/NotNull.class
+com/wisecoach/util/JSONUtils.class
 com/wisecoach/util/ObjectUtils.class
 com/wisecoach/annotation/Nullable.class
 com/wisecoach/util/Assert.class

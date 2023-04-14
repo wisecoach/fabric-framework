@@ -6,12 +6,12 @@
 
     <groupId>com.wisecoach</groupId>
     <artifactId>fabric-security</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <fabric-framework.version>1.0-SNAPSHOT</fabric-framework.version>
+        <fabric-framework.version>1.0.0</fabric-framework.version>
         <fabric-gateway.version>1.2.2</fabric-gateway.version>
         <cglib.version>3.3.0</cglib.version>
         <log4j.version>1.2.17</log4j.version>
