@@ -194,7 +194,7 @@ public class FabricGatewayPlusAutoConfigure {
     // ------------------- spring-service -----------------
 
     @Bean
-    public TransactionAttributeSource transactionAttributeSource() {
+    public TransactionAttributeSource fabricTransactionAttributeSource() {
         return new AnnotationTransactionAttributeSource();
     }
 
