@@ -2,6 +2,7 @@ package com.wisecoach.gatewayplus.bind;
 
 import com.wisecoach.util.JSONUtils;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -25,6 +26,9 @@ public class DefaultContractResolver implements ContractResolver {
 
     @Override
     public Object resolveResult(byte[] result, Method method) {
+        if (method.getReturnType().isAssignableFrom(byte[].class)) {
+            return result;
+        }
         return JSONUtils.deserialize(result, method.getReturnType());
     }
 }

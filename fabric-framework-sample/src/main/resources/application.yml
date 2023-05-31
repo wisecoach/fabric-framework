@@ -6,4 +6,4 @@ fabric:
         endpoint: localhost:7051
         authority: peer0.org1.example.com
     pool:
-      use-pool: true
+      use-pool: false
