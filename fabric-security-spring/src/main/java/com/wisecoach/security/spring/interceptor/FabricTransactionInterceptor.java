@@ -63,16 +63,23 @@ public class FabricTransactionInterceptor implements MethodInterceptor, Ordered 
 
             // 存取user
             logger.trace("存储user");
+            boolean needClear = true;
             UserContext userContext = UserContextHolder.getContext();
-            userContext.setUser(user);
-            UserContextHolder.setContext(userContext);
+            if (userContext.getUser() != null) {
+                needClear = false;
+            } else {
+                userContext.setUser(user);
+                UserContextHolder.setContext(userContext);
+            }
 
             // 调用被加强方法
             logger.trace("调用被加强方法");
             Object ret = invocation.proceed();
             // 清空两个信息的持有者
-            UserInfoContextHolder.clearContext();
-            UserContextHolder.clearContext();
+            if (needClear) {
+                UserInfoContextHolder.clearContext();
+                UserContextHolder.clearContext();
+            }
             return ret;
 
         } else {

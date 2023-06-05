@@ -43,6 +43,8 @@ public class ChaincodeTransactionInterceptor implements MethodInterceptor, Order
     }
 
     /**
+     * TODO 这里有个大bug，如果递归调用加强方法，那么深层递归入栈时覆盖浅层递归的环境出栈时，会清空浅层递归的状态；
+     * TODO 这里想到的解决方案是，判断目前环境是否为空，不为空则不产生新环境，也不清空环境
      * 大致流程如下：
      * 1. 首先要判断方法是否为 ChaincodeTransaction {@link ChaincodeTransaction}
      * 2. 读取事务的策略 {@link TransactionStrategy}
@@ -68,15 +70,29 @@ public class ChaincodeTransactionInterceptor implements MethodInterceptor, Order
         // 2
         TransactionStrategy strategy = txAttr.getTransactionStrategy();
         // 3
-        TransactionContext transactionContext = transactionContextProvider.getTransactionContext(strategy);
-        TransactionContextHolder.setContext(transactionContext);
+        boolean txNeedClear = true;
+        boolean gatewayNeedClear = true;
+        TransactionContext transactionContext = TransactionContextHolder.getContext();
+        // 如果已经有了则不需要清空环境
+        if (transactionContext != null) {
+            txNeedClear = false;
+        } else {
+            // 如果没有则需要重新创建上下文
+            transactionContext = transactionContextProvider.getTransactionContext(strategy);
+            TransactionContextHolder.setContext(transactionContext);
+        }
         try {
             // 4
-            GatewayInfo gatewayInfo = gatewayInfoProvider.getGatewayInfo(obj, method, args);
-            GatewaySession gatewaySession = gatewaySessionProvider.getGatewaySession(gatewayInfo);
-            GatewayContext gatewayContext = GatewayContextHolder.getEmptyContext();
-            gatewayContext.setGateway(gatewaySession);
-            GatewayContextHolder.setContext(gatewayContext);
+            GatewayContext gatewayContext = GatewayContextHolder.getContext();
+            if (gatewayContext.getGateway() != null) {
+                gatewayNeedClear = false;
+            } else {
+                GatewayInfo gatewayInfo = gatewayInfoProvider.getGatewayInfo(obj, method, args);
+                GatewaySession gatewaySession = gatewaySessionProvider.getGatewaySession(gatewayInfo);
+                gatewayContext = GatewayContextHolder.getEmptyContext();
+                gatewayContext.setGateway(gatewaySession);
+                GatewayContextHolder.setContext(gatewayContext);
+            }
             // 5
             advice.before(method, args, obj);
             // 6
@@ -84,8 +100,12 @@ public class ChaincodeTransactionInterceptor implements MethodInterceptor, Order
             // 7
             advice.afterReturning(ret, method, args, obj);
             // 9
-            TransactionContextHolder.clearContext();
-            GatewayContextHolder.clearContext();
+            if (txNeedClear) {
+                TransactionContextHolder.clearContext();
+            }
+            if (gatewayNeedClear) {
+                GatewayContextHolder.clearContext();
+            }
             // 10
             return ret;
         } catch (Throwable t) {

@@ -7,9 +7,8 @@ import com.wisecoach.gatewayplus.transaction.TransactionStrategy;
 import com.wisecoach.security.annotation.FabricTransaction;
 import com.wisecoach.security.spring.annotation.FabricService;
 import com.wisecoach.service.TestService;
-import com.wisecoach.util.JSONUtils;
+import com.wisecoach.util.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * {@code @author:} wisecoach
@@ -29,6 +28,6 @@ public class TestServiceImpl implements TestService {
     public String test() {
         basicContract.initLedger();
         AssetCO assetCO = basicContract.readAsset("asset1");
-        return JSONUtils.serialize(assetCO);
+        return JacksonUtils.serialize(assetCO);
     }
 }
