@@ -7,7 +7,6 @@ import org.hyperledger.fabric.protos.common.Block;
 import org.hyperledger.fabric.protos.peer.BlockAndPrivateData;
 import org.hyperledger.fabric.protos.peer.FilteredBlock;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.UnaryOperator;
@@ -29,7 +28,6 @@ public class NetworkSession implements Network{
 
     /**
      * 要缓存的contracts
-     * TODO 这里错了，还有一个Contract
      */
     private final Map<String, Contract> contracts = new ConcurrentHashMap<>();
 
@@ -49,16 +47,18 @@ public class NetworkSession implements Network{
 
     @Override
     public Contract getContract(String chaincodeName, String contractName) {
-        Contract contract = contracts.get(chaincodeName);
+        Contract contract = contracts.get(getKey(chaincodeName, contractName));
         if (contract == null) {
-            if (StringUtils.hasLength(contractName)) {
-                contract = network.getContract(chaincodeName, contractName);
-            } else {
-                contract = network.getContract(chaincodeName);
-            }
-            contracts.put(chaincodeName, contract);
+            contracts.put(getKey(chaincodeName, contractName), contract);
         }
         return contract;
+    }
+
+    private String getKey(String chaincodeName, String contractName) {
+        if (StringUtils.hasLength(contractName)) {
+            return chaincodeName + ":" + contractName;
+        }
+        return chaincodeName;
     }
 
     @Override
