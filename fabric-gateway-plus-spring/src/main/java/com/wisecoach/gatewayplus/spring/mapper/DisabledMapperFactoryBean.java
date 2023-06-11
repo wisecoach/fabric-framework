@@ -1,8 +1,9 @@
 package com.wisecoach.gatewayplus.spring.mapper;
 
-import com.wisecoach.gatewayplus.proxy.MapperRegistry;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+
+import java.lang.reflect.Proxy;
 
 /**
  * {@code @author:} wisecoach
@@ -10,17 +11,18 @@ import org.springframework.beans.factory.InitializingBean;
  * {@code @version:} 1.0.0
  */
 
-public class MapperFactoryBean<T> implements FactoryBean<T>, InitializingBean {
+public class DisabledMapperFactoryBean<T> implements FactoryBean<T>, InitializingBean {
     private Class<T> mapperInterface;
-    private MapperRegistry registry;
+    private final DisabledMapperProxy disabledMapperProxy = new DisabledMapperProxy();
 
-    public MapperFactoryBean(Class<T> mapperInterface) {
+    public DisabledMapperFactoryBean(Class<T> mapperInterface) {
         this.mapperInterface = mapperInterface;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T getObject() throws Exception {
-        return registry.getMapper(mapperInterface);
+        return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[]{mapperInterface}, disabledMapperProxy);
     }
 
     @Override
@@ -36,18 +38,8 @@ public class MapperFactoryBean<T> implements FactoryBean<T>, InitializingBean {
         this.mapperInterface = mapperInterface;
     }
 
-    public MapperRegistry getRegistry() {
-        return registry;
-    }
-
-    public void setRegistry(MapperRegistry registry) {
-        this.registry = registry;
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (!registry.hasMapper(mapperInterface)) {
-            registry.addMapper(mapperInterface);
-        }
     }
 }

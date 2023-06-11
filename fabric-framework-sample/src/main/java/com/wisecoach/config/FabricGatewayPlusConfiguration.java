@@ -1,7 +1,6 @@
 package com.wisecoach.config;
 
 import com.wisecoach.fabric.CustomGatewayInfoProvider;
-import com.wisecoach.gatewayplus.connection.MspGrpcConnSource;
 import com.wisecoach.gatewayplus.info.GatewayInfoProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
+// @EnableFabricGatewayPlus
 public class FabricGatewayPlusConfiguration {
 
     @Bean

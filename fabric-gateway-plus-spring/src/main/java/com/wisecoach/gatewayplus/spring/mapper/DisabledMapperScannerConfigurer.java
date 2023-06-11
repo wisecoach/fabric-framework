@@ -1,6 +1,5 @@
 package com.wisecoach.gatewayplus.spring.mapper;
 
-import com.wisecoach.gatewayplus.proxy.MapperRegistry;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
@@ -18,13 +17,12 @@ import org.springframework.util.StringUtils;
  * {@code @version:} 1.0.0
  */
 
-public class MapperScannerConfigurer
+public class DisabledMapperScannerConfigurer
         implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware, BeanNameAware {
 
     private ApplicationContext context;
     private String beanName;
     private String basePackage;
-    private MapperRegistry mapperRegistry;
 
     @Override
     public void setBeanName(String name) {
@@ -38,7 +36,7 @@ public class MapperScannerConfigurer
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
+        DisabledClassPathMapperScanner scanner = new DisabledClassPathMapperScanner(registry);
         scanner.scan(
             StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
     }
@@ -51,14 +49,6 @@ public class MapperScannerConfigurer
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
-    }
-
-    public MapperRegistry getMapperRegistry() {
-        return mapperRegistry;
-    }
-
-    public void setMapperRegistry(MapperRegistry mapperRegistry) {
-        this.mapperRegistry = mapperRegistry;
     }
 
     public ApplicationContext getContext() {

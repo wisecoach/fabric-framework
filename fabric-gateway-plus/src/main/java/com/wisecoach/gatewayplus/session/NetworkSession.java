@@ -49,6 +49,7 @@ public class NetworkSession implements Network{
     public Contract getContract(String chaincodeName, String contractName) {
         Contract contract = contracts.get(getKey(chaincodeName, contractName));
         if (contract == null) {
+            contract = network.getContract(chaincodeName, contractName);
             contracts.put(getKey(chaincodeName, contractName), contract);
         }
         return contract;

@@ -6,7 +6,10 @@ import com.wisecoach.gatewayplus.bind.ContractResolver;
 import com.wisecoach.gatewayplus.bind.DefaultContractResolver;
 import com.wisecoach.gatewayplus.config.GatewayPlusConfiguration;
 import com.wisecoach.gatewayplus.connection.GrpcConnSource;
-import com.wisecoach.gatewayplus.event.*;
+import com.wisecoach.gatewayplus.event.FilteredBlockEventMulticaster;
+import com.wisecoach.gatewayplus.event.MapperEventMulticaster;
+import com.wisecoach.gatewayplus.event.SimpleFilteredBlockEventMulticaster;
+import com.wisecoach.gatewayplus.event.SimpleMapperEventMulticaster;
 import com.wisecoach.gatewayplus.info.GatewayInfoProvider;
 import com.wisecoach.gatewayplus.info.NoOpGatewayInfoProvider;
 import com.wisecoach.gatewayplus.proxy.MapperRegistry;
@@ -16,7 +19,7 @@ import com.wisecoach.gatewayplus.session.GrpcConnFetcher;
 import com.wisecoach.gatewayplus.session.SinglePeerGrpcConnFetcher;
 import com.wisecoach.gatewayplus.spring.interceptor.ChaincodeTransactionInterceptor;
 import com.wisecoach.gatewayplus.spring.interceptor.TransactionAttributeSourceAdvisor;
-import com.wisecoach.gatewayplus.spring.mapper.MapperScannerConfigurer;
+import com.wisecoach.gatewayplus.spring.mapper.ContractMapperScannerConfigurer;
 import com.wisecoach.gatewayplus.transaction.*;
 import com.wisecoach.gatewayplus.transaction.async.NoopSubmitAsyncFilteredBlockListener;
 import com.wisecoach.gatewayplus.transaction.async.SubmitAsyncContractExecutor;
@@ -44,7 +47,7 @@ import java.util.List;
 
 @Configuration
 @EnableConfigurationProperties(FabricGatewayPlusProperties.class)
-@Import(FabricGatewayPlusAutoConfigure.AutoConfiguredMapperScannerRegistrar.class)
+// @Import(FabricGatewayPlusAutoConfigure.AutoConfiguredMapperScannerRegistrar.class)
 public class FabricGatewayPlusAutoConfigure {
 
     private final FabricGatewayPlusProperties properties;
@@ -180,15 +183,22 @@ public class FabricGatewayPlusAutoConfigure {
             // 取得BeanFactory所对应的包
             List<String> packages = AutoConfigurationPackages.get(this.beanFactory);
             // 创建 MapperScannerConfigurer 的 BeanDefinition
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(MapperScannerConfigurer.class);
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(ContractMapperScannerConfigurer.class);
             builder.addPropertyValue("basePackage", StringUtils.collectionToCommaDelimitedString(packages));
-            registry.registerBeanDefinition(MapperScannerConfigurer.class.getName(), builder.getBeanDefinition());
+            registry.registerBeanDefinition(ContractMapperScannerConfigurer.class.getName(), builder.getBeanDefinition());
         }
 
         @Override
         public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
             this.beanFactory = beanFactory;
         }
+    }
+
+    @Configuration
+    @Import(AutoConfiguredMapperScannerRegistrar.class)
+    @ConditionalOnMissingBean({ContractMapperScannerConfigurer.class})
+    public class MissingMapperScanner {
+
     }
 
     // ------------------- spring-service -----------------

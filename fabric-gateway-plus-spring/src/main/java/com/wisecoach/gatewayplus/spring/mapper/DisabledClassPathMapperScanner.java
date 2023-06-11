@@ -1,9 +1,7 @@
 package com.wisecoach.gatewayplus.spring.mapper;
 
-import com.wisecoach.gatewayplus.proxy.MapperRegistry;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
@@ -16,9 +14,9 @@ import java.util.Set;
  * {@code @version:} 1.0.0
  */
 
-public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
+public class DisabledClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 
-    public ClassPathMapperScanner(BeanDefinitionRegistry registry) {
+    public DisabledClassPathMapperScanner(BeanDefinitionRegistry registry) {
         super(registry);
     }
 
@@ -39,8 +37,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
             // 设置好MapperFactoryBean的registry和要代理的mapper接口类
             definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName);
             // 我们实际上生效的是MapperFactoryBean，而不是Mapper接口类
-            definition.setBeanClass(MapperFactoryBean.class);
-            definition.getPropertyValues().addPropertyValue("registry", new RuntimeBeanReference(MapperRegistry.class));
+            definition.setBeanClass(DisabledMapperFactoryBean.class);
 
             registry.registerBeanDefinition(beanClassName, definition);
         }
